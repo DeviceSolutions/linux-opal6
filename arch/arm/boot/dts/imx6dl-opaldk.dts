@@ -1,7 +1,7 @@
 /*
  * Copyright 2014 Device Solutions Ltd
  *
- * Author: John Inglis <john@clanbyte.com>
+ * Author: John Inglis <john@device.solutions>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -313,13 +313,18 @@
 		clocks = <&clks 200>;
 		clock-names = "csi_mclk";
 		DOVDD-supply = <&reg_csi_1v8>; // 1v8
-		AVDD-supply = <&ldo5_reg>; // 2v8
-		DVDD-supply = <&ldo6_reg>;  // 1v5
+		AVDD-supply = <&vgen5_2v8_reg>; // 2v8
+		DVDD-supply = <&vgen1_1v5_reg>;  // 1v5
 		pwn-gpios = <&gpio3 2 GPIO_ACTIVE_HIGH>;
 		rst-gpios = <&gpio2 28 GPIO_ACTIVE_LOW>;
 		csi_id = <1>;
 		mclk = <24000000>;
 		mclk_source = <0>;
+	};
+
+	hdmi: edid@50 {
+        compatible = "fsl,imx6-hdmi-i2c";
+        reg = <0x50>;
 	};
 };
 
@@ -346,28 +351,15 @@
 		clocks = <&clks IMX6QDL_CLK_CKO2>;  // IMX6QDL_CLK_CKO
 		clock-names = "csi_mclk";
 		DOVDD-supply = <&reg_csi_1v8>; // 1v8
-		AVDD-supply = <&ldo5_reg>; // 2v8
-		DVDD-supply = <&ldo6_reg>;  // 1v5
-		PVDD-supply = <&ldo6_reg>;  /* 1.8v */
+		AVDD-supply = <&vgen5_2v8_reg>; // 2v8
+		DVDD-supply = <&vgen1_1v5_reg>;  // 1v5
+		PVDD-supply = <&vgen4_1v8_reg>;  /* 1.8v */
 		pwn-gpios = <&gpio5 0 1>;
 		rst-gpios = <&gpio3 9 0>;
 		csi_id = <0>;
 		mclk = <24000000>;
 		mclk_source = <0>;
 		cvbs = <1>;
-	};
-};
-
-&i2c4 {
-	status = "okay";
-    clocks = <&clks 116>;  // dual lite uses ecspi5 clk
-	clock-frequency = <100000>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_i2c4_1>;
-
-    hdmi: edid@50 {
-		compatible = "fsl,imx6-hdmi-i2c";
-		reg = <0x50>;
 	};
 };
 
